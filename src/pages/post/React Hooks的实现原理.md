@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: React Hooks的实现原理
-image: "/images/hooks.jpg"
+image: "/images/hooks.png"
 date: 2022-03-21
 categories:
   - React
