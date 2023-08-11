@@ -1,11 +1,10 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: Second example post with external an image
-image: https://api.lorem.space/image/drink?w=400&h=225
+title: React Hooks的实现原理
+image: [https://api.lorem.space/image/drink?w=400&h=225](https://blog.knoldus.com/wp-content/uploads/2020/05/hooks.png)
 date: 2022-03-21 05:44
 categories:
-  - lorem
-  - image
+  - React
 ---
 
 # 前言
