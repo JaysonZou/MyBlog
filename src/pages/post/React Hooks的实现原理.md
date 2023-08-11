@@ -1,8 +1,8 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: React Hooks的实现原理
-image: [https://api.lorem.space/image/drink?w=400&h=225](https://blog.knoldus.com/wp-content/uploads/2020/05/hooks.png)
-date: 2022-03-21 05:44
+image: /images/hooks.jpg
+date: 2022-03-21
 categories:
   - React
 ---
@@ -22,7 +22,7 @@ categories:
 
 1. 最简单的 useState 用法是这样的：
 
-```
+```js
 function Counter() {
   var [count, setCount] = useState(0);
 
