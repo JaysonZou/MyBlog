@@ -1,3 +1,12 @@
+---
+layout: ../../layouts/PostLayout.astro
+title: "Draft post"
+date: "2022-02-21"
+draft: true
+categories:
+  - typescript
+---
+
 我们都曾遇到过这样的情况，即我们使用了一个很少键入的库。以下面的第三方函数为例：
 ```
 function describePerson(person: {
