@@ -1,14 +1,14 @@
 ---
 layout: ../../layouts/PostLayout.astro
 title: "Draft post"
-date: "2022-02-21"
+date: "2023-09-11"
 draft: true
 categories:
   - typescript
 ---
 
 我们都曾遇到过这样的情况，即我们使用了一个很少键入的库。以下面的第三方函数为例：
-```
+```js
 function describePerson(person: {
   name: string；
   age: number；
@@ -41,7 +41,7 @@ const alex: GetFirstArgumentOfAnyFunction<typeof describePerson> = {
 describePerson(alex); /* 没有 TypeScript 错误 */ 
 通过 TypeScript 中的推断关键字和条件类型，我们可以获取一个类型，并分离出其中的任何部分供以后使用。
 ```
-无值 never 类型
+# never 类型
 在 TypeScript 中，never 被视为 "无值 "类型。你经常会看到它被用作一个死胡同类型。在 TypeScript 中，string | never 这样的联合类型会求值为 string，而舍弃 never。
 
 要理解这一点，可以将 string 和 never 视为数学集合，其中 string 是一个包含所有字符串值的集合，而 never 是一个不包含任何值（∅ 集合）的集合。这两个集合的联合显然只有前者。
@@ -50,10 +50,10 @@ describePerson(alex); /* 没有 TypeScript 错误 */
 
 这就解释了为什么 never 被用作逃生舱口，因为与其他类型结合后，它就会消失。
 
-在 TypeScript 中使用条件类型
-条件类型根据类型是否满足特定约束来修改类型。它的工作原理类似于 JavaScript 中的三元组。
+# 在 TypeScript 中使用条件类型
+条件类型根据类型是否满足特定约束来修改类型。它的工作原理类似于 JavaScript 中的三元运算符。
 
-扩展关键字
+# extends 关键字
 在 TypeScript 中，约束可以使用 extends 关键字来表达。T extends K 表示假设 T 类型的值也是 K 类型的值是安全的，例如 0 extends number，因为 var zero: number = 0 是类型安全的。
 
 因此，我们可以使用泛型来检查是否满足约束，并返回不同的类型。
@@ -66,7 +66,7 @@ type lorem = StringFromType<'lorem ipsum'> // 'string' 类型
 type ten = StringFromType<10> // never
 为了涵盖 StringFromType 泛型的更多情况，我们可以像在 JavaScript 中嵌套三元运算符一样，链入更多条件。
 
-类型 StringFromType<T> = T 扩展字符串
+类型 StringFromType<T> = T extends string
   ? '字符串
   : T extends boolean
   ? 布尔
@@ -77,7 +77,7 @@ type ten = StringFromType<10> // never
 type lorem = StringFromType<'lorem ipsum'> // '字符串' 类型
 type isActive = StringFromType<false> // 'boolean' (布尔型)
 type unassignable = StringFromType<TypeError> // 'error'（错误）。
-条件类型和联合体
+# 条件类型和联合体
 在扩展联合作为约束的情况下，TypeScript 将循环遍历联合的每个成员，并返回自己的联合：
 
 类型 NullableString = string | null | undefined
@@ -108,7 +108,7 @@ type Exclude<T, U> = T extends U ? never : T
 type AllFunctions = (...args: any[]) => any
 ...args: any[] 将涵盖零或更多参数，而 => any 将涵盖任何返回类型。
 
-在 TypeScript 中使用infer
+# 在 TypeScript 中使用infer
 推断关键字是对条件类型的赞美，不能在 extends 子句之外使用。推断允许我们在约束中定义一个变量，以便引用或返回。
 
 以 TypeScript 内置的 ReturnType 工具为例。它接收函数类型并给出其返回类型：
@@ -133,30 +133,33 @@ React 的道具类型
   : {}
 在检查我们的类型参数是否为 React 组件后，它会推导出其道具并返回。如果失败，它会检查类型参数是否为 IntrinsicElements（div、按钮等），并返回其道具。如果全部失败，则返回 {}，在 TypeScript 中，这意味着 "任何非空值"。
 
-推断关键字用例
+# infer 的常见用法
 使用推断关键字通常被描述为解包类型。以下是推断关键字的一些常见用法。
 
-函数的第一个参数：
+Function’s first argument:：
 这是第一个示例中的解决方案：
-
+```js
 type GetFirstArgumentOfAnyFunction<T> = T extends (
-  first: 推断 FirstArgument、
-  ...参数：any[]
+  first: infer FirstArgument,
+  ...args: any[]
 ) => any
-  ? 第一参数
-  从不
+  ? FirstArgument
+  : never
 
 type t = GetFirstArgumentOfAnyFunction<(name: string, age: number) => void> // string
-函数的第二个参数：
+```
+Function’s second argument:
+```js
 type GetSecondArgumentOfAnyFunction<T> = T extends (
-  first: any、
-  second: 推断第二个参数、
-  ...参数：any[]
+  first: any,
+  second: infer SecondArgument,
+  ...args: any[]
 ) => any
-  ? 第二参数
-  ：从不
+  ? SecondArgument
+  : never
 
 type t = GetSecondArgumentOfAnyFunction<(name: string, age: number) => void> // number
+```
 Promise 返回类型
 type PromiseReturnType<T> = T extends Promise<infer Return> ? 返回：T
 
@@ -165,5 +168,5 @@ type t = PromiseReturnType<Promise<string>> // string
 type ArrayType<T> = T extends (infer Item)[] ? Item ： T
 
 type t = ArrayType<[string, number]> // string | number
-结论
-推断关键字是一个功能强大的工具，它允许我们在使用第三方 TypeScript 代码时解包和存储类型。在本文中，我们讲解了使用 never 关键字、extends 关键字、联合体和函数签名编写健壮的条件类型的各个方面。
+# 结论
+infer 是一个功能强大的工具，它允许我们在使用第三方 TypeScript 代码时解包和存储类型。在本文中，我们讲解了使用 never 关键字、extends 关键字、联合体和函数签名编写健壮的条件类型的各个方面。
