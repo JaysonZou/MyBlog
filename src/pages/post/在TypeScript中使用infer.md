@@ -31,7 +31,7 @@ describePerson(alex) /* 类型 string[] 不可赋值给类型 [string, string] *
 TypeScript 将推断 alex 的类型为 { name: string; age: number; hobbies: string[] }，不允许将其用作 describePerson 的参数。
 
 而且，即使它允许，最好也能对 alex 对象本身进行类型检查，以实现正确的自动完成。借助 TypeScript 中的推断关键字，我们可以轻松做到这一点。
-```
+```ts
 const alex: GetFirstArgumentOfAnyFunction<typeof describePerson> = {
   name: "Alex"、
   年龄 20,
@@ -39,15 +39,13 @@ const alex: GetFirstArgumentOfAnyFunction<typeof describePerson> = {
 };
 
 describePerson(alex); /* 没有 TypeScript 错误 */ 
-通过 TypeScript 中的推断关键字和条件类型，我们可以获取一个类型，并分离出其中的任何部分供以后使用。
 ```
+通过 TypeScript 中的infer和条件类型，我们可以获取一个类型，并分离出其中的任何部分供以后使用。
+
 # never 类型
 在 TypeScript 中，never 被视为 "无值 "类型。你经常会看到它被用作一个死胡同类型。在 TypeScript 中，string | never 这样的联合类型会求值为 string，而舍弃 never。
-
-要理解这一点，可以将 string 和 never 视为数学集合，其中 string 是一个包含所有字符串值的集合，而 never 是一个不包含任何值（∅ 集合）的集合。这两个集合的联合显然只有前者。
-
-相比之下，union string | any 的值为 any。同样，你可以把它看作是字符串集合和包含所有集合的通用集合（U）的联合，而后者的求值结果也是它自己。
-
+要理解这一点，可以将 string 和 never 视为数学集合，其中 string 是一个包含所有字符串值的集合，而 never 是一个不包含任何值的集合。这两个集合的联合显然只有前者。
+相比之下，union `string | any` 的值为 any。同样，你可以把它看作是字符串集合和包含所有集合的通用集合（U）的联合，而后者的求值结果也是它自己。
 这就解释了为什么 never 被用作逃生舱口，因为与其他类型结合后，它就会消失。
 
 # 在 TypeScript 中使用条件类型
@@ -138,7 +136,7 @@ React 的道具类型
 
 Function’s first argument:：
 这是第一个示例中的解决方案：
-```js
+```ts
 type GetFirstArgumentOfAnyFunction<T> = T extends (
   first: infer FirstArgument,
   ...args: any[]
@@ -149,7 +147,7 @@ type GetFirstArgumentOfAnyFunction<T> = T extends (
 type t = GetFirstArgumentOfAnyFunction<(name: string, age: number) => void> // string
 ```
 Function’s second argument:
-```js
+```ts
 type GetSecondArgumentOfAnyFunction<T> = T extends (
   first: any,
   second: infer SecondArgument,
@@ -160,13 +158,18 @@ type GetSecondArgumentOfAnyFunction<T> = T extends (
 
 type t = GetSecondArgumentOfAnyFunction<(name: string, age: number) => void> // number
 ```
-Promise 返回类型
-type PromiseReturnType<T> = T extends Promise<infer Return> ? 返回：T
+Promise ReturnType
+```ts
+type PromiseReturnType<T> = T extends Promise<infer Return> ? Return：T
 
-type t = PromiseReturnType<Promise<string>> // string 
-数组类型
+type t = PromiseReturnType<Promise<string>> // string
+```
+
+## 数组类型
+```ts
 type ArrayType<T> = T extends (infer Item)[] ? Item ： T
 
 type t = ArrayType<[string, number]> // string | number
+```
 # 结论
 infer 是一个功能强大的工具，它允许我们在使用第三方 TypeScript 代码时解包和存储类型。在本文中，我们讲解了使用 never 关键字、extends 关键字、联合体和函数签名编写健壮的条件类型的各个方面。
