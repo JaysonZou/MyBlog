@@ -1,29 +1,3 @@
-# Astro Sarissa Blog Theme
-
-Responsive, functional, personal blog theme for Astro.
-
-![Screenshot](./public/images/Screenshot.jpg)
-
-Sarissa Blog theme created to serve markdown-based personel blog needs.
-
-## Features
-
-- Responsive and functional
-- Markdown-based blog
-- 3 Color Mode (Light, Book, Dark)
-- Easy site configration
-- Built-in article title and description search
-- Support draft page
-- Pagination for archive and category view
-
-## Used libraries
-
-- **CSS Framework:** [Tailwind](https://tailwindcss.com/)
-- **Component library:** [DaisyUI](https://daisyui.com/)
-- **Fuzzy Search:** [Fuse.js](https://fusejs.io/)
-- **Date & Time:** [Luxon](https://moment.github.io/luxon/#/)
-- **Theme Changer:** [Theme change](https://github.com/saadeghi/theme-change)
-
 ## Site Configuration
 
 ```cjs
@@ -102,17 +76,3 @@ Sarissa Blog theme created to serve markdown-based personel blog needs.
     resultFound: " result(s) found",
   },
 ```
-
-## Built with Sarrisa Blog
-- [İsmail Özçelik](https://ismailozcelik.com/) - My personal blog site
-Open an issue to listed here.
-
-## Support
-
-If this template helped you, buy me a coffee.
-
-<a href="https://www.buymeacoffee.com/ismailozcelik" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
-## License
-
-This template is MIT licensed. 

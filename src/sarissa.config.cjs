@@ -1,10 +1,10 @@
 export default {
-  siteTitle: "Sarissa Blog",
-  siteDescription: "Responsive Blog Template",
+  siteTitle: "Jayson's Blog",
+  siteDescription: "Jayson写博客的地方",
   favicon: "/favicon.ico",
-  siteImagePath: "/images/sarissa.png",
-  footer: "© 1967 - 2022 Sarissa Blog",
-  dateFormat: "dd.MM.yyyy HH:mm",
+  siteImagePath: "/images/cat.png",
+  footer: "© 2019 - 2023 Jayson's Blog",
+  dateFormat: "yyyy.MM.dd HH:mm",
   socialMedia: {
     facebook: "ozcelikismail",
     twitter: "ismailozcelik",
